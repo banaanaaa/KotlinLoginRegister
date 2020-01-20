@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marginLeft">100dp</dimen>
+    <dimen name="mainTextSize">30sp</dimen>
+    <dimen name="secondTextSize">20sp</dimen>
+    <dimen name="btnTextSize">20sp</dimen>
+</resources>

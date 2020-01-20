@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">KotlinLoginRegister</string>
+
+    <string name="header_welcome">WELCOME</string>
+    <string name="header_registration">REGISTRATION</string>
+    <string name="header_reset_password">RESET PASSWORD</string>
+
+    <string name="field_login">Login</string>
+    <string name="field_password">Password</string>
+    <string name="field_rpt_password">Repeat password</string>
+    <string name="field_email">E-Mail</string>
+
+    <string name="on_btn_cancel">Cancel</string>
+    <string name="on_btn_accept">Accept</string>
+    <string name="on_btn_forgot_password">Forgot your password?</string>
+
+    <string name="new_account_button">Don"'"t have an account? Sign up.</string>
+    <string name="have_account_button">Already have an account? Sign in.</string>
+
+    <string name="desc_of_reset_password">*Enter the email address to which you registered your account and enter new password.</string>
+
+    <string name="log_out">Log out</string>
+</resources>
