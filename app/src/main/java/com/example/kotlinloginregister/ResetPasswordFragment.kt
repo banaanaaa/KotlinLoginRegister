@@ -11,9 +11,9 @@ import android.widget.EditText
 
 import androidx.fragment.app.Fragment
 import android.content.Intent
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_reset_password.*
+import kotlinx.android.synthetic.main.fragment_reset_password.view.*
 
 class ResetPasswordFragment : Fragment() {
 
@@ -23,21 +23,17 @@ class ResetPasswordFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_reset_password, container, false)
 
-        val buttonCancel = view.findViewById<MaterialButton>(R.id.res_pass_btn_cancel)
-        val buttonAccept = view.findViewById<MaterialButton>(R.id.res_pass_btn_accept)
-        val buttonSignUp = view.findViewById<MaterialButton>(R.id.res_pass_btn_sign_up)
-
-        buttonCancel.setOnClickListener {
+        view.res_pass_btn_cancel.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 1
             reset()
         }
 
-        buttonSignUp.setOnClickListener {
+        view.res_pass_btn_sign_up.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 0
             reset()
         }
 
-        buttonAccept.setOnClickListener {
+        view.res_pass_btn_accept.setOnClickListener {
             if (isEMailValid() && isPasswordValid() && areSimilar()) {
                 activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 1
 

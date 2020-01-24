@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.view.*
 
 class LoginFragment : Fragment() {
 
@@ -22,21 +23,17 @@ class LoginFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        val buttonSignUp = view.findViewById<MaterialButton>(R.id.log_btn_sign_up)
-        val buttonResetPass = view.findViewById<MaterialButton>(R.id.log_btn_reset_pass)
-        val buttonAccept = view.findViewById<MaterialButton>(R.id.log_btn_accept)
-
-        buttonSignUp.setOnClickListener {
+        view.log_btn_sign_up.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 0
             reset()
         }
 
-        buttonResetPass.setOnClickListener {
+        view.log_btn_reset_pass.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 2
             reset()
         }
 
-        buttonAccept.setOnClickListener {
+        view.log_btn_accept.setOnClickListener {
             if (log_email_et.text.toString() == activity!!.tmp_mail.text.toString() && log_password_et.text.toString() == activity!!.tmp_pass.text.toString()) {
                 val intent = Intent(activity, PlugActivity::class.java)
                 startActivity(intent)

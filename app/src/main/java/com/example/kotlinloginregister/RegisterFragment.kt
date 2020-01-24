@@ -2,7 +2,6 @@ package com.example.kotlinloginregister
 
 import android.os.Bundle
 
-import android.text.TextUtils
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 
 import androidx.fragment.app.Fragment
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.android.synthetic.main.fragment_register.view.*
 
 class RegisterFragment : Fragment() {
 
@@ -23,15 +22,12 @@ class RegisterFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_register, container, false)
 
-        val buttonSignIn = view.findViewById<MaterialButton>(R.id.reg_btn_sign_in)
-        val buttonAccept = view.findViewById<MaterialButton>(R.id.reg_btn_accept)
-
-        buttonSignIn.setOnClickListener {
+        view.reg_btn_sign_in.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 1
             reset()
         }
 
-        buttonAccept.setOnClickListener {
+        view.reg_btn_accept.setOnClickListener {
             if (isEMailValid() && isLoginValid() && isPasswordValid() && areSimilar()) {
                 activity!!.findViewById<TextInputEditText>(R.id.log_email_et).setText(reg_email_et.text.toString())
                 activity!!.findViewById<EditText>(R.id.tmp_mail).setText(reg_email_et.text.toString())
