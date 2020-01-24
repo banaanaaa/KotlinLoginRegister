@@ -19,7 +19,7 @@ class PlugActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
 
-            Toast.makeText(this, "You are logged out of your account", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.notice_logged_out, Toast.LENGTH_SHORT).show()
         }
     }
 }

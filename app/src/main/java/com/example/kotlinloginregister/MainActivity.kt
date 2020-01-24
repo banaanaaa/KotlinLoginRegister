@@ -17,13 +17,13 @@ class MainActivity : AppCompatActivity() {
         val viewPager = findViewById<View>(R.id.fragment_page) as CustomViewPager
         viewPager.setPagingEnabled(false)
 
-        val adapter = MyAdapter(supportFragmentManager)
+        val adapterViewPager = MyAdapter(supportFragmentManager)
 
-        viewPager.adapter = adapter
+        viewPager.adapter = adapterViewPager
         viewPager.currentItem = 1
     }
 
-    class MyAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    class MyAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getCount(): Int {
             return 3

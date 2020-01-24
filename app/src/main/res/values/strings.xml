@@ -5,19 +5,33 @@
     <string name="header_registration">REGISTRATION</string>
     <string name="header_reset_password">RESET PASSWORD</string>
 
+    <string name="field_email">E-Mail</string>
     <string name="field_login">Login</string>
     <string name="field_password">Password</string>
     <string name="field_rpt_password">Repeat password</string>
-    <string name="field_email">E-Mail</string>
 
-    <string name="on_btn_cancel">Cancel</string>
-    <string name="on_btn_accept">Accept</string>
-    <string name="on_btn_forgot_password">Forgot your password?</string>
-
-    <string name="new_account_button">Don"'"t have an account? Sign up.</string>
-    <string name="have_account_button">Already have an account? Sign in.</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_accept">Accept</string>
+    <string name="btn_forgot_password">Forgot your password?</string>
+    <string name="btn_sign_up">Don"'"t have an account? Sign up.</string>
+    <string name="btn_sign_in">Already have an account? Sign in.</string>
+    <string name="btn_log_out">Log out</string>
 
     <string name="desc_of_reset_password">*Enter the email address to which you registered your account and enter new password.</string>
 
-    <string name="log_out">Log out</string>
+    <string name="error_email">Error: wrong email</string>
+    <string name="error_email_none">Error: enter email</string>
+    <string name="error_login_short">Error: short login</string>
+    <string name="error_login_none">Error: enter login</string>
+    <string name="error_password_short">Error: short password</string>
+    <string name="error_password_none">Error: enter password</string>
+    <string name="error_repeat_password">Error: different passwords</string>
+    <string name="error_repeat_password_none">Error: enter password</string>
+
+    <string name="text_your_password">Your new password</string>
+    <string name="text_select_email_client">Select client: </string>
+
+    <string name="notice_logged_in">Logged in successfully</string>
+    <string name="notice_logged_out">You are logged out of your account</string>
+    <string name="notice_sign_in_error">Wrong email or password</string>
 </resources>

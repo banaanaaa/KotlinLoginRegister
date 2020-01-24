@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">KotlinLoginRegister</string>
+
+    <string name="header_welcome">WELCOME</string>
+    <string name="header_registration">REGISTRATION</string>
+    <string name="header_reset_password">RESET PASSWORD</string>
+
+    <string name="field_email">Эл. адрес</string>
+    <string name="field_login">Логин</string>
+    <string name="field_password">Пароль</string>
+    <string name="field_rpt_password">Повторите пароль</string>
+
+    <string name="btn_cancel">Отмена</string>
+    <string name="btn_accept">Подтвердить</string>
+    <string name="btn_forgot_password">Забыли свой пароль?</string>
+    <string name="btn_sign_up">Нет аккаунта? Зарегистрируйтесь.</string>
+    <string name="btn_sign_in">Уже есть аккаунт? Войдите.</string>
+    <string name="btn_log_out">Выйти</string>
+
+    <string name="desc_of_reset_password">*Введите почту, на которую вы регистрировались и введите новый пароль.</string>
+
+    <string name="error_email">Ошибка: неверная почта</string>
+    <string name="error_email_none">Ошибка: введите почту</string>
+    <string name="error_login_short">Ошибка: короткий логин</string>
+    <string name="error_login_none">Ошибка: введите логин</string>
+    <string name="error_password_short">Ошибка: короткий пароль</string>
+    <string name="error_password_none">Ошибка: введите пароль</string>
+    <string name="error_repeat_password">ошибка: разные пароли</string>
+    <string name="error_repeat_password_none">ошибка: введите пароль</string>
+
+    <string name="text_your_password">Ваш новый пароль</string>
+    <string name="text_select_email_client">Выберите клиент: </string>
+
+    <string name="notice_logged_in">Вы успешно вошли в аккаунт</string>
+    <string name="notice_logged_out">Вы вышли с аккаунта</string>
+    <string name="notice_sign_in_error">Неправельный эл.адрес или пароль</string>
+</resources>

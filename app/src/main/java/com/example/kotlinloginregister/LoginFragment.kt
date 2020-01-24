@@ -6,17 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 
 import androidx.fragment.app.Fragment
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
-
-    private var eMail: EditText? = null
-    private var password: EditText? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,38 +22,36 @@ class LoginFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        eMail = view.findViewById(R.id.log_EMail) as EditText
-        password = view.findViewById(R.id.log_Password) as EditText
-
-        val buttonSignUp = view.findViewById(R.id.button_sign_up) as Button
-        val buttonResetPassword = view.findViewById(R.id.button_reset_password) as Button
-        val buttonAccept = view.findViewById(R.id.log_btn_Accept) as Button
+        val buttonSignUp = view.findViewById<MaterialButton>(R.id.log_btn_sign_up)
+        val buttonResetPass = view.findViewById<MaterialButton>(R.id.log_btn_reset_pass)
+        val buttonAccept = view.findViewById<MaterialButton>(R.id.log_btn_accept)
 
         buttonSignUp.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 0
+            reset()
         }
 
-        buttonResetPassword.setOnClickListener {
+        buttonResetPass.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 2
+            reset()
         }
 
         buttonAccept.setOnClickListener {
-            if (checkValid()) {
+            if (log_email_et.text.toString() == activity!!.tmp_mail.text.toString() && log_password_et.text.toString() == activity!!.tmp_pass.text.toString()) {
                 val intent = Intent(activity, PlugActivity::class.java)
                 startActivity(intent)
 
-                Toast.makeText(activity, "Logged in successfully", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, R.string.notice_logged_in, Toast.LENGTH_LONG).show()
 
-                eMail!!.setText("")
-                password!!.setText("")
+                reset()
             } else
-                Toast.makeText(activity, "Wrong email or password", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity, R.string.notice_sign_in_error, Toast.LENGTH_LONG).show()
         }
-
         return view
     }
 
-    private fun checkValid() : Boolean {
-        return eMail!!.text.toString() == activity!!.tmp_mail.text.toString()  && password!!.text.toString() == activity!!.tmp_pass.text.toString()
+    private fun reset() {
+        log_email_et.setText("")
+        log_password_et.setText("")
     }
 }

@@ -7,18 +7,15 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 
 import androidx.fragment.app.Fragment
 import android.content.Intent
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.fragment_reset_password.*
 
 class ResetPasswordFragment : Fragment() {
-
-    private var eMail: EditText? = null
-    private var password: EditText? = null
-    private var repeatPassword: EditText? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,13 +23,9 @@ class ResetPasswordFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_reset_password, container, false)
 
-        eMail = view.findViewById(R.id.res_EMail) as EditText
-        password = view.findViewById(R.id.res_Password) as EditText
-        repeatPassword = view.findViewById(R.id.res_RepeatPassword) as EditText
-
-        val buttonCancel = view.findViewById(R.id.res_btn_Cancel) as Button
-        val buttonAccept = view.findViewById(R.id.res_btn_Accept) as Button
-        val buttonSignUp = view.findViewById(R.id.res_button_sign_up) as Button
+        val buttonCancel = view.findViewById<MaterialButton>(R.id.res_pass_btn_cancel)
+        val buttonAccept = view.findViewById<MaterialButton>(R.id.res_pass_btn_accept)
+        val buttonSignUp = view.findViewById<MaterialButton>(R.id.res_pass_btn_sign_up)
 
         buttonCancel.setOnClickListener {
             activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 1
@@ -46,77 +39,66 @@ class ResetPasswordFragment : Fragment() {
 
         buttonAccept.setOnClickListener {
             if (isEMailValid() && isPasswordValid() && areSimilar()) {
-                eMail!!.setBackgroundResource(R.drawable.field_valid)
-                password!!.setBackgroundResource(R.drawable.field_valid)
-                repeatPassword!!.setBackgroundResource(R.drawable.field_valid)
                 activity!!.findViewById<CustomViewPager>(R.id.fragment_page).currentItem = 1
 
-                sendEmail(eMail!!.text.toString(), password!!.text.toString())
+                sendEmail(res_pass_email_et.text.toString(), res_pass_password_et.text.toString())
 
-                activity!!.findViewById<EditText>(R.id.log_EMail).setText(eMail!!.text.toString())
-                activity!!.findViewById<EditText>(R.id.tmp_mail).setText(eMail!!.text.toString())
-                activity!!.findViewById<EditText>(R.id.tmp_pass).setText(password!!.text.toString())
+                activity!!.findViewById<TextInputEditText>(R.id.log_email_et).setText(res_pass_email_et.text.toString())
+                activity!!.findViewById<EditText>(R.id.tmp_mail).setText(res_pass_email_et.text.toString())
+                activity!!.findViewById<EditText>(R.id.tmp_pass).setText(res_pass_password_et.text.toString())
 
                 reset()
             } else {
-                var tmp = ""
                 if (!isEMailValid()) {
-                    eMail!!.setBackgroundResource(R.drawable.field_none_valid)
-                    tmp += "Incorrect spelling of the email address"
-                } else
-                    eMail!!.setBackgroundResource(R.drawable.field_valid)
+                    if (res_pass_email_et.text!!.isEmpty()) res_pass_email_l.error = getString(R.string.error_email_none)
+                    else res_pass_email_l.error = getString(R.string.error_email)
+                }
+                else res_pass_email_l.error = null
 
                 if (!isPasswordValid()) {
-                    password!!.setBackgroundResource(R.drawable.field_none_valid)
-                    when (tmp == "") {
-                        true -> tmp += "Short password (must be more than 8 characters)"
-                        false -> tmp += "\nShort password (must be more than 8 characters)"
+                    when (res_pass_password_et.text.toString().length) {
+                        0 -> res_pass_password_l.error = getString(R.string.error_password_none)
+                        else -> res_pass_password_l.error = getString(R.string.error_password_short)
                     }
-                } else
-                    password!!.setBackgroundResource(R.drawable.field_valid)
+                }
+                else res_pass_password_l.error = null
 
                 if (!areSimilar()) {
-                    repeatPassword!!.setBackgroundResource(R.drawable.field_none_valid)
-                    when (tmp == "") {
-                        true -> tmp += "Passwords are different"
-                        false -> tmp += "\nPasswords are different"
-                    }
-                } else
-                    repeatPassword!!.setBackgroundResource(R.drawable.field_valid)
-
-                Toast.makeText(activity, tmp, Toast.LENGTH_LONG).show()
+                    if (res_pass_password_repeat_et.text!!.isEmpty()) res_pass_password_repeat_l.error = getString(R.string.error_repeat_password_none)
+                    else res_pass_password_repeat_l.error = getString(R.string.error_repeat_password)
+                }
+                else res_pass_password_repeat_l.error = null
             }
         }
-
         return view
     }
 
     private fun isEMailValid() : Boolean {
-        return !TextUtils.isEmpty(eMail!!.text.toString()) && Patterns.EMAIL_ADDRESS.matcher(eMail!!.text.toString()).matches()
+        return !TextUtils.isEmpty(res_pass_email_et.text.toString()) && Patterns.EMAIL_ADDRESS.matcher(res_pass_email_et.text.toString()).matches() && res_pass_email_et.text!!.isNotEmpty()
     }
 
     private fun isPasswordValid() : Boolean {
-        return password!!.text.toString().length >= 8
+        return res_pass_password_et.text.toString().length >= 8
     }
 
     private fun areSimilar() : Boolean {
-        return password!!.text.toString() == repeatPassword!!.text.toString()
+        return res_pass_password_repeat_et.text.toString() == res_pass_password_et.text.toString()
     }
 
     private fun reset() {
-        eMail!!.setText("")
-        password!!.setText("")
-        repeatPassword!!.setText("")
+        res_pass_email_et.setText("")
+        res_pass_password_et.setText("")
+        res_pass_password_repeat_et.setText("")
     }
 
     private fun sendEmail(to: String, newPassword: String) {
         val email = Intent(Intent.ACTION_SEND)
-        email.putExtra(Intent.EXTRA_EMAIL, arrayOf<String>(to))
-        email.putExtra(Intent.EXTRA_SUBJECT, "Your new password")
+        email.putExtra(Intent.EXTRA_EMAIL, arrayOf(to))
+        email.putExtra(Intent.EXTRA_SUBJECT, R.string.text_your_password)
         email.putExtra(Intent.EXTRA_TEXT, newPassword)
 
         email.type = "message/rfc822"
 
-        startActivity(Intent.createChooser(email, "Выберите email клиент :"))
+        startActivity(Intent.createChooser(email, getString(R.string.text_select_email_client)))
     }
 }
