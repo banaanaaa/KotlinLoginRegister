@@ -13,8 +13,8 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_accept">Accept</string>
     <string name="btn_forgot_password">Forgot your password?</string>
-    <string name="btn_sign_up">Don"'"t have an account? Sign up.</string>
-    <string name="btn_sign_in">Already have an account? Sign in.</string>
+    <string name="btn_sign_up">Don"'"t have an account?\nSign up</string>
+    <string name="btn_sign_in">Already have an account?\nSign in</string>
     <string name="btn_log_out">Log out</string>
 
     <string name="desc_of_reset_password">*Enter the email address to which you registered your account and enter new password.</string>

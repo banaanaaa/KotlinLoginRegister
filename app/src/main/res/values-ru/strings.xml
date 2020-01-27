@@ -13,8 +13,8 @@
     <string name="btn_cancel">Отмена</string>
     <string name="btn_accept">Подтвердить</string>
     <string name="btn_forgot_password">Забыли свой пароль?</string>
-    <string name="btn_sign_up">Нет аккаунта? Зарегистрируйтесь.</string>
-    <string name="btn_sign_in">Уже есть аккаунт? Войдите.</string>
+    <string name="btn_sign_up">Нет аккаунта?\nЗарегистрируйтесь</string>
+    <string name="btn_sign_in">Уже есть аккаунт?\nВойдите</string>
     <string name="btn_log_out">Выйти</string>
 
     <string name="desc_of_reset_password">*Введите почту, на которую вы регистрировались и введите новый пароль.</string>
