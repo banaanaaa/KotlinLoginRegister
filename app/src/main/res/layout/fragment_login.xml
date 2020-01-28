@@ -56,7 +56,7 @@
             style="@style/ColoredButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="logFragmentAcceptClick"
+            android:onClick="acceptClick"
             android:text="@string/btn_accept"
             app:layout_constraintRight_toRightOf="@id/log_password_l"
             app:layout_constraintTop_toBottomOf="@id/log_password_l" />
@@ -66,7 +66,7 @@
             style="@style/OutlinedButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="logFragmentResetPassClick"
+            android:onClick="forgotPasswordClick"
             android:text="@string/btn_forgot_password"
             android:layout_marginTop="@dimen/spacing_xlarge"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,7 @@
             style="@style/TextButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="logFragmentSignUpClick"
+            android:onClick="signUpClick"
             android:text="@string/btn_sign_up"
             android:layout_marginTop="@dimen/spacing_xlarge"
             app:layout_constraintTop_toBottomOf="@+id/log_btn_reset_pass" />

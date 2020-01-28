@@ -10,8 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
 
@@ -46,112 +49,102 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun logFragmentSignUpClick(v: View) {
-        fragment_page.currentItem = 0
-        resetLog()
-    }
-
-    fun logFragmentResetPassClick(v: View) {
+    fun forgotPasswordClick(v: View) {
         fragment_page.currentItem = 2
-        resetLog()
+        reset(1)
     }
 
-    fun logFragmentAcceptClick(v: View) {
-        if (log_email_et.text.toString() == this.tmp_mail.text.toString() && log_password_et.text.toString() == this.tmp_pass.text.toString()) {
-            val intent = Intent(this, PlugActivity::class.java)
-            startActivity(intent)
-            Toast.makeText(this, R.string.notice_logged_in, Toast.LENGTH_LONG).show()
+    fun acceptClick(v: View) {
+        when (v.id) {
+            R.id.log_btn_accept -> {
+                if (log_email_et.text.toString() == this.tmp_mail.text.toString() && log_password_et.text.toString() == this.tmp_pass.text.toString()) {
+                    val intent = Intent(this, PlugActivity::class.java)
+                    startActivity(intent)
+                    Toast.makeText(this, R.string.notice_logged_in, Toast.LENGTH_LONG).show()
 
-            resetLog()
-        } else
-            Toast.makeText(this, R.string.notice_sign_in_error, Toast.LENGTH_LONG).show()
-    }
+                    reset(1)
+                } else
+                    Toast.makeText(this, R.string.notice_sign_in_error, Toast.LENGTH_LONG).show()
+            }
+            R.id.reg_btn_accept -> {
+                if (isEMailValid(v) && isLoginValid() && isPasswordValid(v) && areSimilar(v)) {
+                    regComplete(reg_email_et, reg_password_et)
+                    fragment_page.currentItem = 1
+                    reset(2)
+                } else {
+                    setEMailError(v, reg_email_et, reg_email_l)
 
-    fun regFragmentSignInClick(v: View) {
-        fragment_page.currentItem = 1
-        resetReg()
-    }
+                    if (!isLoginValid()) {
+                        when (reg_login_et.text.toString().length) {
+                            0 -> reg_login_l.error = getString(R.string.error_login_none)
+                            else -> reg_login_l.error = getString(R.string.error_login_short)
+                        }
+                    } else reg_login_l.error = null
 
-    fun regFragmentAcceptClick(v: View) {
-        if (isEMailValid(v) && isLoginValid() && isPasswordValid(v) && areSimilar(v)) {
-            log_email_et.setText(reg_email_et.text.toString())
-            tmp_mail.setText(reg_email_et.text.toString())
-            tmp_pass.setText(reg_password_et.text.toString())
-
-            resetReg()
-
-            fragment_page.currentItem = 1
-        } else {
-            if (!isEMailValid(v)) {
-                if (reg_email_et.text!!.isEmpty()) reg_email_l.error =
-                    getString(R.string.error_email_none)
-                else reg_email_l.error = getString(R.string.error_email)
-            } else reg_email_l.error = null
-
-            if (!isLoginValid()) {
-                when (reg_login_et.text.toString().length) {
-                    0 -> reg_login_l.error = getString(R.string.error_login_none)
-                    else -> reg_login_l.error = getString(R.string.error_login_short)
+                    setPasswordError(v, reg_password_et, reg_password_l)
+                    setRepeatPasswordError(v, reg_password_repeat_et, reg_password_repeat_l)
                 }
-            } else reg_login_l.error = null
-
-            if (!isPasswordValid(v)) {
-                when (reg_password_et.text.toString().length) {
-                    0 -> reg_password_l.error = getString(R.string.error_password_none)
-                    else -> reg_password_l.error = getString(R.string.error_password_short)
+            }
+            R.id.res_pass_btn_accept -> {
+                if (isEMailValid(v) && isPasswordValid(v) && areSimilar(v)) {
+                    regComplete(res_pass_email_et, res_pass_password_et)
+                    fragment_page.currentItem = 1
+                    sendEmail(res_pass_email_et.text.toString(), res_pass_password_et.text.toString())
+                    reset(3)
+                } else {
+                    setEMailError(v, res_pass_email_et, res_pass_email_l)
+                    setPasswordError(v, res_pass_password_et, res_pass_password_l)
+                    setRepeatPasswordError(v, res_pass_password_repeat_et, res_pass_password_repeat_l)
                 }
-            } else reg_password_l.error = null
-
-            if (!areSimilar(v)) {
-                if (reg_password_repeat_et.text!!.isEmpty()) reg_password_repeat_l.error =
-                    getString(R.string.error_repeat_password_none)
-                else reg_password_repeat_l.error = getString(R.string.error_repeat_password)
-            } else reg_password_repeat_l.error = null
+            }
         }
     }
 
-    fun resFragmentCancelClick(v: View) {
+    fun signInClick(v: View) {
         fragment_page.currentItem = 1
-        resetRes()
+        reset(2)
     }
 
-    fun resFragmentSignUpClick(v: View) {
+    fun cancelClick(v: View) {
+        fragment_page.currentItem = 1
+        reset(3)
+    }
+
+    fun signUpClick(v: View) {
         fragment_page.currentItem = 0
-        resetRes()
+        when (v.id) {
+            R.id.log_btn_sign_up -> reset(1)
+            R.id.res_pass_btn_sign_up ->  reset(3)
+        }
     }
 
-    fun resFragmentAcceptClick(v: View) {
-        if (isEMailValid(v) && isPasswordValid(v) && areSimilar(v)) {
-            fragment_page.currentItem = 1
+    private fun regComplete(e_m: TextInputEditText, e_p: TextInputEditText) {
+        log_email_et.setText(e_m.text.toString())
+        tmp_mail.setText(e_m.text.toString())
+        tmp_pass.setText(e_p.text.toString())
+    }
 
-            sendEmail(res_pass_email_et.text.toString(), res_pass_password_et.text.toString())
+    private fun setEMailError(v: View, e: TextInputEditText, l: TextInputLayout) {
+        if (!isEMailValid(v)) {
+            if (e.text!!.isEmpty()) l.error = getString(R.string.error_email_none)
+            else l.error = getString(R.string.error_email)
+        } else l.error = null
+    }
 
-            log_email_et.setText(res_pass_email_et.text.toString())
-            tmp_mail.setText(res_pass_email_et.text.toString())
-            tmp_pass.setText(res_pass_password_et.text.toString())
-
-            resetRes()
-        } else {
-            if (!isEMailValid(v)) {
-                if (res_pass_email_et.text!!.isEmpty()) res_pass_email_l.error = getString(R.string.error_email_none)
-                else res_pass_email_l.error = getString(R.string.error_email)
+    private fun setPasswordError(v: View, e: TextInputEditText, l: TextInputLayout) {
+        if (!isPasswordValid(v)) {
+            when (e.text.toString().length) {
+                0 -> l.error = getString(R.string.error_password_none)
+                else -> l.error = getString(R.string.error_password_short)
             }
-            else res_pass_email_l.error = null
+        } else l.error = null
+    }
 
-            if (!isPasswordValid(v)) {
-                when (res_pass_password_et.text.toString().length) {
-                    0 -> res_pass_password_l.error = getString(R.string.error_password_none)
-                    else -> res_pass_password_l.error = getString(R.string.error_password_short)
-                }
-            }
-            else res_pass_password_l.error = null
-
-            if (!areSimilar(v)) {
-                if (res_pass_password_repeat_et.text!!.isEmpty()) res_pass_password_repeat_l.error = getString(R.string.error_repeat_password_none)
-                else res_pass_password_repeat_l.error = getString(R.string.error_repeat_password)
-            }
-            else res_pass_password_repeat_l.error = null
-        }
+    private fun setRepeatPasswordError(v: View, e: TextInputEditText, l: TextInputLayout) {
+        if (!areSimilar(v)) {
+            if (e.text!!.isEmpty()) l.error = getString(R.string.error_repeat_password_none)
+            else l.error = getString(R.string.error_repeat_password)
+        } else l.error = null
     }
 
     private fun sendEmail(to: String, newPassword: String) {
@@ -169,8 +162,7 @@ class MainActivity : AppCompatActivity() {
         var bool = false
         when (v.id) {
             R.id.reg_btn_accept -> bool = Patterns.EMAIL_ADDRESS.matcher(reg_email_et.text.toString()).matches()
-            R.id.res_pass_btn_accept -> bool = Patterns.EMAIL_ADDRESS.matcher(res_pass_email_et.text.toString()).matches() &&
-                    res_pass_email_et.text!!.isNotEmpty()
+            R.id.res_pass_btn_accept -> bool = Patterns.EMAIL_ADDRESS.matcher(res_pass_email_et.text.toString()).matches()
         }
         return bool
     }
@@ -197,21 +189,23 @@ class MainActivity : AppCompatActivity() {
         return bool
     }
 
-    private fun resetLog() {
-        log_email_et.setText("")
-        log_password_et.setText("")
-    }
-
-    private fun resetReg() {
-        reg_email_et.setText("")
-        reg_login_et.setText("")
-        reg_password_et.setText("")
-        reg_password_repeat_et.setText("")
-    }
-
-    private fun resetRes() {
-        res_pass_email_et.setText("")
-        res_pass_password_et.setText("")
-        res_pass_password_repeat_et.setText("")
+    private fun reset(id: Int) {
+        when (id) {
+            1 -> {
+                log_email_et.setText("")
+                log_password_et.setText("")
+            }
+            2 -> {
+                reg_email_et.setText("")
+                reg_login_et.setText("")
+                reg_password_et.setText("")
+                reg_password_repeat_et.setText("")
+            }
+            3 -> {
+                res_pass_email_et.setText("")
+                res_pass_password_et.setText("")
+                res_pass_password_repeat_et.setText("")
+            }
+        }
     }
 }
