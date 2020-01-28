@@ -2,86 +2,96 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <TextView
             android:id="@+id/text_Login"
-            style="@style/HeaderStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/header_welcome"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/spacing_xxxlarge"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/header_welcome"
+            style="@style/HeaderStyle"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_email_l"
-            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_Login"
             app:endIconMode="clear_text"
-            app:layout_constraintTop_toBottomOf="@id/text_Login">
+            style="@style/TextInputLayoutStyle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/field_email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/log_password_l"
-            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/log_email_l"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            style="@style/TextInputLayoutStyle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/log_password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/field_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/log_btn_accept"
-            style="@style/ColoredButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="acceptClick"
-            android:text="@string/btn_accept"
             app:layout_constraintRight_toRightOf="@id/log_password_l"
-            app:layout_constraintTop_toBottomOf="@id/log_password_l" />
+            app:layout_constraintTop_toBottomOf="@id/log_password_l"
+            android:text="@string/btn_accept"
+            android:onClick="acceptClick"
+            style="@style/ColoredButtonStyle"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/log_btn_reset_pass"
-            style="@style/OutlinedButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="forgotPasswordClick"
-            android:text="@string/btn_forgot_password"
-            android:layout_marginTop="@dimen/spacing_xlarge"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/log_btn_accept" />
+            app:layout_constraintTop_toBottomOf="@+id/log_btn_accept"
+            android:layout_marginTop="@dimen/spacing_xlarge"
+            android:text="@string/btn_forgot_password"
+            android:onClick="forgotPasswordClick"
+            style="@style/OutlinedButtonStyle"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/log_btn_sign_up"
-            style="@style/TextButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="signUpClick"
-            android:text="@string/btn_sign_up"
+            app:layout_constraintTop_toBottomOf="@+id/log_btn_reset_pass"
             android:layout_marginTop="@dimen/spacing_xlarge"
-            app:layout_constraintTop_toBottomOf="@+id/log_btn_reset_pass" />
+            android:text="@string/btn_sign_up"
+            android:onClick="signUpClick"
+            style="@style/TextButtonStyle"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

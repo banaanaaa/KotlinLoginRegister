@@ -3,115 +3,128 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <TextView
             android:id="@+id/text_view_register"
-            style="@style/HeaderStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/header_registration"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/spacing_xxxlarge"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:text="@string/header_registration"
+            style="@style/HeaderStyle"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reg_email_l"
-            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/text_view_register"
             app:endIconMode="clear_text"
-            app:layout_constraintTop_toBottomOf="@id/text_view_register">
+            style="@style/TextInputLayoutStyle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/field_email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reg_login_l"
-            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/reg_email_l"
             app:counterEnabled="true"
             app:counterMaxLength="24"
             app:endIconMode="clear_text"
-            app:layout_constraintTop_toBottomOf="@id/reg_email_l">
+            style="@style/TextInputLayoutStyle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_login_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_."
                 android:hint="@string/field_login"
                 android:inputType="text"
-                android:textDirection="locale" />
+                android:textDirection="locale"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_."
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reg_password_l"
-            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/reg_login_l"
             app:counterEnabled="true"
             app:counterMaxLength="16"
-            app:layout_constraintTop_toBottomOf="@id/reg_login_l"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            style="@style/TextInputLayoutStyle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/field_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/reg_password_repeat_l"
-            style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:counterEnabled="true"
             app:layout_constraintTop_toBottomOf="@id/reg_password_l"
-            app:passwordToggleEnabled="true">
+            app:counterEnabled="true"
+            app:passwordToggleEnabled="true"
+            style="@style/TextInputLayoutStyle"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/reg_password_repeat_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/field_rpt_password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reg_btn_accept"
-            style="@style/ColoredButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_accept"
-            android:onClick="acceptClick"
             app:layout_constraintRight_toRightOf="@id/reg_password_repeat_l"
-            app:layout_constraintTop_toBottomOf="@id/reg_password_repeat_l" />
+            app:layout_constraintTop_toBottomOf="@id/reg_password_repeat_l"
+            android:onClick="acceptClick"
+            android:text="@string/btn_accept"
+            style="@style/ColoredButtonStyle"
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reg_btn_sign_in"
-            style="@style/TextButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/reg_btn_accept"
             android:layout_marginTop="@dimen/spacing_xlarge"
-            android:onClick="signInClick"
             android:text="@string/btn_sign_in"
-            app:layout_constraintTop_toBottomOf="@id/reg_btn_accept" />
+            android:onClick="signInClick"
+            style="@style/TextButtonStyle"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

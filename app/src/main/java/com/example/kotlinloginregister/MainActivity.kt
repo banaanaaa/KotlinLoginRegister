@@ -40,18 +40,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getItem(position: Int): Fragment {
-            when (position) {
-                0 -> return RegisterFragment()
-                1 -> return LoginFragment()
-                2 -> return ResetPasswordFragment()
-                else -> return RegisterFragment()
+            return when (position) {
+                0 -> RegisterFragment()
+                1 -> LoginFragment()
+                2 -> ResetPasswordFragment()
+                else -> RegisterFragment()
             }
         }
     }
 
     fun forgotPasswordClick(v: View) {
         fragment_page.currentItem = 2
-        reset(1)
+        reset(ResetTypes.LOGIN)
     }
 
     fun acceptClick(v: View) {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     Toast.makeText(this, R.string.notice_logged_in, Toast.LENGTH_LONG).show()
 
-                    reset(1)
+                    reset(ResetTypes.LOGIN)
                 } else
                     Toast.makeText(this, R.string.notice_sign_in_error, Toast.LENGTH_LONG).show()
             }
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 if (isEMailValid(v) && isLoginValid() && isPasswordValid(v) && areSimilar(v)) {
                     regComplete(reg_email_et, reg_password_et)
                     fragment_page.currentItem = 1
-                    reset(2)
+                    reset(ResetTypes.REGISTER)
                 } else {
                     setEMailError(v, reg_email_et, reg_email_l)
 
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     regComplete(res_pass_email_et, res_pass_password_et)
                     fragment_page.currentItem = 1
                     sendEmail(res_pass_email_et.text.toString(), res_pass_password_et.text.toString())
-                    reset(3)
+                    reset(ResetTypes.RESET)
                 } else {
                     setEMailError(v, res_pass_email_et, res_pass_email_l)
                     setPasswordError(v, res_pass_password_et, res_pass_password_l)
@@ -102,19 +102,19 @@ class MainActivity : AppCompatActivity() {
 
     fun signInClick(v: View) {
         fragment_page.currentItem = 1
-        reset(2)
+        reset(ResetTypes.REGISTER)
     }
 
     fun cancelClick(v: View) {
         fragment_page.currentItem = 1
-        reset(3)
+        reset(ResetTypes.RESET)
     }
 
     fun signUpClick(v: View) {
         fragment_page.currentItem = 0
         when (v.id) {
-            R.id.log_btn_sign_up -> reset(1)
-            R.id.res_pass_btn_sign_up ->  reset(3)
+            R.id.log_btn_sign_up -> reset(ResetTypes.LOGIN)
+            R.id.res_pass_btn_sign_up -> reset(ResetTypes.RESET)
         }
     }
 
@@ -159,12 +159,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isEMailValid(v: View): Boolean {
-        var bool = false
-        when (v.id) {
-            R.id.reg_btn_accept -> bool = Patterns.EMAIL_ADDRESS.matcher(reg_email_et.text.toString()).matches()
-            R.id.res_pass_btn_accept -> bool = Patterns.EMAIL_ADDRESS.matcher(res_pass_email_et.text.toString()).matches()
+        return when (v.id) {
+            R.id.reg_btn_accept -> Patterns.EMAIL_ADDRESS.matcher(reg_email_et.text.toString()) .matches()
+            R.id.res_pass_btn_accept -> Patterns.EMAIL_ADDRESS.matcher(res_pass_email_et.text.toString()) .matches()
+            else -> false
         }
-        return bool
     }
 
     private fun isLoginValid(): Boolean {
@@ -172,36 +171,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isPasswordValid(v: View): Boolean {
-        var bool = false
-        when (v.id) {
-            R.id.reg_btn_accept -> bool = reg_password_et.text.toString().length >= 8
-            R.id.res_pass_btn_accept -> bool = res_pass_password_et.text.toString().length >= 8
+        return when (v.id) {
+            R.id.reg_btn_accept -> reg_password_et.text.toString().length >= 8
+            R.id.res_pass_btn_accept -> res_pass_password_et.text.toString().length >= 8
+            else -> false
         }
-        return bool
     }
 
     private fun areSimilar(v: View): Boolean {
-        var bool = false
-        when (v.id) {
-            R.id.reg_btn_accept -> bool = reg_password_repeat_et.text.toString() == reg_password_et.text.toString()
-            R.id.res_pass_btn_accept -> bool = res_pass_password_repeat_et.text.toString() == res_pass_password_et.text.toString()
+        return when (v.id) {
+            R.id.reg_btn_accept -> reg_password_repeat_et.text.toString() == reg_password_et.text.toString()
+            R.id.res_pass_btn_accept -> res_pass_password_repeat_et.text.toString() == res_pass_password_et.text.toString()
+            else -> false
         }
-        return bool
     }
 
-    private fun reset(id: Int) {
-        when (id) {
-            1 -> {
+    enum class ResetTypes {
+        LOGIN, REGISTER, RESET
+    }
+
+    private fun reset(type: ResetTypes) {
+        when (type) {
+            ResetTypes.LOGIN -> {
                 log_email_et.setText("")
                 log_password_et.setText("")
             }
-            2 -> {
+            ResetTypes.REGISTER -> {
                 reg_email_et.setText("")
                 reg_login_et.setText("")
                 reg_password_et.setText("")
                 reg_password_repeat_et.setText("")
             }
-            3 -> {
+            ResetTypes.RESET -> {
                 res_pass_email_et.setText("")
                 res_pass_password_et.setText("")
                 res_pass_password_repeat_et.setText("")
